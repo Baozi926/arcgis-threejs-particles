@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=favicon.ico><title>arcgis-threejs-particle</title><link href=css/app.a8ab6e3e.css rel=preload as=style><link href=js/app.c2116b8b.js rel=preload as=script><link href=js/chunk-vendors.5affa1e0.js rel=preload as=script><link href=css/app.a8ab6e3e.css rel=stylesheet></head><body><script src=./libs/threejs/three.min.js></script><script type=x-shader/x-vertex id=vertexshader>varying vec3 vColor;
+      void main() 
+      {
+        vColor = vec3(1.0, 1.0, 1.0); // set RGB color associated to vertex; use later in fragment shader.
+        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+      
+        // option (1): draw particles at constant size on screen
+        // gl_PointSize = size;
+          // option (2): scale particles as objects in 3D space
+        gl_PointSize = 5.0;
+        gl_Position = projectionMatrix * mvPosition;
+      }</script><script type=x-shader/x-fragment id=fragmentshader>uniform sampler2D texture;
+      varying vec3 vColor; // colors associated to vertices; assigned by vertex shader
+      void main() 
+      {
+        // calculates a color for the particle
+        gl_FragColor = vec4( vColor, 1.0 );
+        // sets a white particle texture to desired color
+        gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+      }</script><noscript><strong>We're sorry but arcgis-threejs-particle doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id=app></div><script src=js/chunk-vendors.5affa1e0.js></script><script src=js/app.c2116b8b.js></script></body></html>
